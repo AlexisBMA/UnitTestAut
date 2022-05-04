@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const { isReadStream } = require('request/lib/helpers')
-const Bicicleta = require('../../models/bicicleta')
-const Usuario = require('../../models/usuario')
-const Reserva = require('../../models/reserva')
+const Bicicleta = require('../models/bicicleta')
+const Usuario = require('../models/usuario')
+const Reserva = require('../models/reserva')
 var assert = require('assert')
 
 describe('Testing usuarios', function(){

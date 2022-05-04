@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Bicicleta = require('../../models/bicicleta')
+const Bicicleta = require('../models/bicicleta')
 const request = require('request')
 var assert = require('assert')
 
@@ -51,7 +51,7 @@ describe('Bicicletas API', () => {
             }, (error, response, body) => {
                 assert.equal(response.statusCode, 200)
                 let bici = JSON.parse(body).bicicleta
-                assert.equal(bici.color, 'green').toBe('green')
+                assert.equal(bici.color, 'green')
                 assert.equal(bici.ubicacion[0], -99.13)
                 assert.equal(bici.ubicacion[1], 19.28)
                 done()

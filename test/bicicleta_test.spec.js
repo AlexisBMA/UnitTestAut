@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const { isReadStream } = require('request/lib/helpers')
-const Bicicleta = require('../../models/bicicleta')
+const Bicicleta = require('../models/bicicleta')
 var assert = require('assert')
 
 describe('Testing bicicletas', function(){
