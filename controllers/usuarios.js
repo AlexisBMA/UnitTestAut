@@ -67,6 +67,7 @@ module.exports = {
                 }else if (correctPass && usuario.verificado){
                     // res.render('usuarios/reserve', { errors:{}, usuario: new Usuario() } )
                     console.log('Logged in')
+                    res.redirect('/bicicletas')
                 }
             }else{
                 console.log("User not registered")
