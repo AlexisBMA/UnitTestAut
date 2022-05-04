@@ -1,4 +1,5 @@
 const Bicicleta = require('../models/bicicleta')
+const Reserva = require('../models/reserva')
 
 exports.bicicleta_list = function (req, res) {
     Bicicleta.find({}, function (err, bicis) {
@@ -41,3 +42,32 @@ exports.bicicleta_update_post = function (req, res) {
     });
 
 } 
+
+exports.bicicleta_reserve_get = function (req, res) {
+    Bicicleta.find({}, function (err, bicis) {
+        if (err) console.log(err)
+        res.render('bicicletas/reserve', { bicis: bicis })
+    })
+}
+
+exports.bicicleta_reserve_post = function (req, res) {
+    Bicicleta.findOne({ code: req.params.id }).then(function (bici) {
+        let reserve = Reserva.createInstance(new Date().toLocaleDateString(), new Date().toLocaleDateString(), bici.id)
+        Reserva.add(reserve)
+        res.redirect('/bicicletas')
+    });
+}
+
+exports.reserve_list = function (req, res) {
+    Reserva.find({}, function (err, reservas) {
+        if (err) console.log(err)
+        res.render('bicicletas/reserves', { reserves: reservas })
+    })
+}
+
+exports.reserve_delete_post = function (req, res) {
+    Reserva.removeByCode(req.body.code).then(function(){
+        console.log("Code ", req.body.code)
+        res.redirect('/bicicletas/reserves')
+    })
+}

@@ -16,5 +16,11 @@ router.post('/:id/delete', bicicletaController.bicicleta_delete_post)
 router.get('/:id/update', bicicletaController.bicicleta_update_get)
 router.post('/:id/update', bicicletaController.bicicleta_update_post)
 
+// Reserve bike
+router.get('/reserve', bicicletaController.bicicleta_reserve_get)
+router.post('/:id/reserve', bicicletaController.bicicleta_reserve_post)
+router.post('/reserve/:id/delete', bicicletaController.reserve_delete_post)
+router.get('/reserves', bicicletaController.reserve_list)
+
 
 module.exports = router;

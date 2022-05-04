@@ -1,0 +1,24 @@
+extends ../layout
+
+block content 
+    h1 Listado de reservas
+    table.table 
+        thead  
+            tr 
+                th BICI ID
+                th USER ID
+                th DESDE
+                th HASTA
+        tbody 
+            each reserve in reserves
+                tr
+                    td=reserve.bicicleta
+                    td=reserve.usuario
+                    td=reserve.desde
+                    td=reserve.hasta
+                    td 
+                        form.inline(method='post' action='/bicicletas/reserve/' + reserve.id + '/delete')
+                            input(type='hidden' name='code' value= reserve.code)
+                            button.link-button(type='submit' name='submit_param' value='submit_value' class='btn')
+                                = 'Eliminar'
+    a(href='/') Home

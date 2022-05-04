@@ -1,0 +1,25 @@
+extends ../layout
+
+block content 
+    h1 Reservar bicicleta
+    table.table 
+        thead  
+            tr 
+                th ID
+                th Color
+                th Modelo
+                th Ubicacion
+                th Reservar
+        tbody 
+            each bici in bicis
+                tr
+                    td=bici.code
+                    td=bici.color
+                    td=bici.modelo
+                    td=bici.ubicacion
+                    td 
+                        form.inline(method='post' action='/bicicletas/' + bici.code + '/reserve')
+                            input(type='hidden' name='code' value= bici.code)
+                            button.link-button(type='submit' name='submit_param' value='submit_value' class='btn')
+                                = 'Reserve'
+    a(href='/') Home

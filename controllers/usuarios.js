@@ -1,6 +1,8 @@
 
 
+const { useColors } = require('debug/src/browser')
 let Usuario = require('../models/usuario')
+
 
 module.exports = {
 
@@ -50,6 +52,28 @@ module.exports = {
         })
     },
 
+    login_get: function(req, res, next){
+        res.render('usuarios/login', { errors:{}, usuario: new Usuario() } ) 
+    },
+
+    login: function(req, res, next){
+        Usuario.findOne({email: req.body.email}, async function(err, usuario){
+            if(usuario !== null){
+                correctPass = await usuario.validPassword(req.body.password)
+                if(!correctPass){
+                    console.log("Incorrect password")
+                }else if(!usuario.verificado){
+                    console.log("User not verified")
+                }else if (correctPass && usuario.verificado){
+                    // res.render('usuarios/reserve', { errors:{}, usuario: new Usuario() } )
+                    console.log('Logged in')
+                }
+            }else{
+                console.log("User not registered")
+                res.render('usuarios/create', { errors:{}, usuario: new Usuario() } )
+            }
+        })
+    },
 
     delete: function(req, res, next){
         Usuario.findByIdAndDelete(req.body.id, function(err){
