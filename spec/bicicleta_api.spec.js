@@ -1,19 +1,20 @@
 const mongoose = require('mongoose')
 const Bicicleta = require('../../models/bicicleta')
 const request = require('request')
+var assert = require('assert')
 
 let base_url = 'http://localhost:3000/api/bicicletas/'
 
 describe('Bicicletas API', () => {
 
     beforeEach(function(done){
-        var mongoDB = 'mongodb://localhost:27017/red_bicicletas'
+        var mongoDB = 'mongodb://localhost:27017/red_bicicletas' // update url with mongo
         mongoose.connect(mongoDB, {useNewUrlParser: true})
 
         const db = mongoose.connection
         db.on('error', console.error.bind(console, 'connection error'))
         db.once('open', function(){
-            //console.log('Connected to the test database')
+            console.log('Connected to the test database')
             done()
         })
     })
@@ -31,9 +32,9 @@ describe('Bicicletas API', () => {
         it('Status 200', (done) => {
             request.get(base_url, function(error, response, body) {
                 let res = JSON.parse(body)
-                expect(response.statusCode).toBe(200)
+                assert.equal(response.statusCode, 200)
                 let bicis_num = res.bicicletas.length;
-                expect(bicis_num).toBe(0)
+                assert.equal(bicis_num, 0)
                 done()
             })
         })
@@ -48,11 +49,11 @@ describe('Bicicletas API', () => {
                 url: base_url + 'create',
                 body: aBici
             }, (error, response, body) => {
-                expect(response.statusCode).toBe(200)
+                assert.equal(response.statusCode, 200)
                 let bici = JSON.parse(body).bicicleta
-                expect(bici.color).toBe('green')
-                expect(bici.ubicacion[0]).toBe(-99.13)
-                expect(bici.ubicacion[1]).toBe(19.28)
+                assert.equal(bici.color, 'green').toBe('green')
+                assert.equal(bici.ubicacion[0], -99.13)
+                assert.equal(bici.ubicacion[1], 19.28)
                 done()
             })
         })

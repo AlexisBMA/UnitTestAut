@@ -3,10 +3,11 @@ const { isReadStream } = require('request/lib/helpers')
 const Bicicleta = require('../../models/bicicleta')
 const Usuario = require('../../models/usuario')
 const Reserva = require('../../models/reserva')
+var assert = require('assert')
 
 describe('Testing usuarios', function(){
     beforeEach(function(done){
-        var mongoDB = 'mongodb://localhost:27017/red_bicicletas'
+        var mongoDB = 'mongodb://localhost:27017/red_bicicletas' // update url to mongo
         mongoose.connect(mongoDB, {useNewUrlParser: true})
 
         const db = mongoose.connection
@@ -47,10 +48,10 @@ describe('Testing usuarios', function(){
             usuario.reservar(bicicleta.id, hoy, mañana, function(err, reserva){
                 Reserva.find({}).populate('bicicleta').populate('usuario').exec(function(err, reservas){
                     //console.log(reservas[0])
-                    expect(reservas.length).toBe(1)
-                    expect(reservas[0].diasDeReserva()).toBe(2)
-                    expect(reservas[0].bicicleta.code).toBe(1)
-                    expect(reservas[0].usuario.nombre).toBe(usuario.nombre)
+                    assert.equal(reservas.length, 1)
+                    assert.equal(reservas[0].diasDeReserva(), 2)
+                    assert.equal(reservas[0].bicicleta.code, 1)
+                    assert.equal(reservas[0].usuario.nombre, usuario.nombre)
                     done()
                 })
             })
